@@ -169,8 +169,9 @@ class _StatsReasonsSliderState extends State<StatsReasonsSlider> {
       Map<String, int> reasonCounts = {};
       int totalFilterCount = 0;
       final pIdx = prayerNames.indexOf(widget.selectedPrayer);
-      if (pIdx == -1)
+      if (pIdx == -1) {
         return _buildSliderContent(context, widget.selectedPrayer, {}, 0);
+      }
 
       homeController.notes.forEach((date, prayersMap) {
         final dayStatuses = homeController.days[date];

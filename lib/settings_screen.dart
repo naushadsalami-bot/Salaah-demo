@@ -575,9 +575,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    _safeFormatDate(
-                      controller.startDate.value,
-                    ), // ✅ Fixed Error
+                    _safeFormatDate(controller.startDate.value),
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -598,7 +596,7 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
 
-                  // ✅ Sirf yeh date picker button wala part replace karo
+                  //  Sirf yeh date picker button wala part replace karo
                   GestureDetector(
                     onTap: () => _pickDate(controller),
                     child: Container(
@@ -608,14 +606,14 @@ class SettingsScreen extends StatelessWidget {
                         vertical: 9,
                       ),
                       decoration: BoxDecoration(
-                        // ✅ Fix 2 — solid teal, no gradient
+                        // Fix 2 — solid teal, no gradient
                         color: const Color(0xFF1AA6A6),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // ✅ Fix 1 — date set nahi toh sirf empty, set hai toh date dikhao
+                          //  Fix 1 — date set nahi toh sirf empty, set hai toh date dikhao
                           Text(
                             dateSelected
                                 ? _safeFormatDate(controller.startDate.value)
@@ -726,7 +724,7 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // ✅ Teal Header
+                  // Teal Header
                   Container(
                     width: double.infinity,
                     color: const Color(0xFF2FA4A9),
@@ -754,7 +752,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // ✅ Custom Month Row
+                  //Custom Month Row
                   Container(
                     color: bgColor,
                     padding: const EdgeInsets.symmetric(
@@ -800,7 +798,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  //  Calendar — gap bilkul nahi, built-in header clip se cut
+                  //Calendar — gap bilkul nahi, built-in header clip se cut
                   Theme(
                     data: Theme.of(context).copyWith(
                       colorScheme: ColorScheme.light(
@@ -868,7 +866,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  // ✅ CLEAR + CANCEL + SET
+                  //  CLEAR + CANCEL + SET
                   Container(
                     color: bgColor,
                     padding: const EdgeInsets.fromLTRB(0, 0, 8, 8),
@@ -1025,7 +1023,7 @@ class SettingsScreen extends StatelessWidget {
                       child: Text('Add', style: TextStyle(color: Colors.white)),
                     ),
                     const SizedBox(width: 4),
-                    // ✅ Reset icon — Add ke side mein
+                    // Reset icon — Add ke side mein
                     IconButton(
                       onPressed: () => _confirmResetOrDelete(null),
                       icon: Icon(
