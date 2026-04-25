@@ -1,0 +1,5 @@
+-keep class com.dexterous.** { *; }
+-keep class androidx.core.app.** { *; }
+-dontwarn com.dexterous.**
+-keep class com.google.firebase.** { *; }
+-dontwarn com.google.firebase.**

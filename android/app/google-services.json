@@ -1,0 +1,146 @@
+{
+  "project_info": {
+    "project_number": "688810972928",
+    "firebase_url": "https://shahadav2-99c1d-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "shahadav2-99c1d",
+    "storage_bucket": "shahadav2-99c1d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688810972928:android:09a3cca87d84900f6485e5",
+        "android_client_info": {
+          "package_name": "com.example.shahada_app_getx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688810972928-bfn32g16smgrgtogmohni61ci2hklsbi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shahada_app_getx",
+            "certificate_hash": "76c93ef95191764e8f4091f9976fa18183ad7924"
+          }
+        },
+        {
+          "client_id": "688810972928-ihfgnb75aoine0h5147rln0i60cvjh1u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBralQlPi9BrvVbzI5yM0wc2nWc1sIdiPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688810972928-ihfgnb75aoine0h5147rln0i60cvjh1u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "688810972928-4fje49j8rd1sge33a1i980hr4trfh855.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shahada.life",
+                "app_store_id": "6743071321"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688810972928:android:3aad1fa60f2336086485e5",
+        "android_client_info": {
+          "package_name": "com.example.zabi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688810972928-e1923fffjl5gerhkm30tthpqqflkif6s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zabi",
+            "certificate_hash": "85648ab762906197667469d4c18e8e92d11cdbc6"
+          }
+        },
+        {
+          "client_id": "688810972928-ihfgnb75aoine0h5147rln0i60cvjh1u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBralQlPi9BrvVbzI5yM0wc2nWc1sIdiPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688810972928-ihfgnb75aoine0h5147rln0i60cvjh1u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "688810972928-4fje49j8rd1sge33a1i980hr4trfh855.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shahada.life",
+                "app_store_id": "6743071321"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688810972928:android:1ff8ed3513e7b7cd6485e5",
+        "android_client_info": {
+          "package_name": "com.shahada.life"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688810972928-sseu3gsof7d4pruos84hfppip7nhr5nc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shahada.life",
+            "certificate_hash": "4d7ad09f91c95972686787285806113caf40f289"
+          }
+        },
+        {
+          "client_id": "688810972928-ihfgnb75aoine0h5147rln0i60cvjh1u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBralQlPi9BrvVbzI5yM0wc2nWc1sIdiPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688810972928-ihfgnb75aoine0h5147rln0i60cvjh1u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "688810972928-4fje49j8rd1sge33a1i980hr4trfh855.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.shahada.life",
+                "app_store_id": "6743071321"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
