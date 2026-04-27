@@ -10,7 +10,7 @@ workflows:
         bundle_identifier: com.shahada.salaahapp.ios
       vars:
         APP_ID: 6762504748
-      flutter: 3.29.3
+      flutter: 3.41.7
       xcode: 16.2
       cocoapods: 1.16.2
     scripts:
