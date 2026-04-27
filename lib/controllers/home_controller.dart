@@ -208,7 +208,6 @@ class HomeController extends GetxController {
     final date = DateTime(d.year, d.month, d.day);
     final diff = today.difference(date).inDays;
 
-    // ✅ Sirf yeh line badli — . ki jagah /
     String datePart =
         "${d.day.toString().padLeft(2, '0')}.${d.month.toString().padLeft(2, '0')}.${d.year.toString().substring(2)}";
     if (diff == 0) return '$datePart Today';

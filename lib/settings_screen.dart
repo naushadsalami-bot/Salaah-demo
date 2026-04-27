@@ -8,28 +8,10 @@ import 'controllers/theme_controller.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  // String _safeFormatDate(DateTime? date) {
-  //   if (date == null) return _safeFormatDate(DateTime.now());
-  //   return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year.toString().substring(2)}';
-  // }
+  // ✅ Error Fix: Yeh helper function null handle karega
   String _safeFormatDate(DateTime? date) {
     if (date == null) return _safeFormatDate(DateTime.now());
-    const monthNames = [
-      '',
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return '${date.day.toString().padLeft(2, '0')}-${monthNames[date.month]}-${date.year}';
+    return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year.toString().substring(2)}';
   }
 
   @override
@@ -64,8 +46,7 @@ class SettingsScreen extends StatelessWidget {
           16,
           16,
           16,
-          16,
-          // kBottomNavigationBarHeight + 40,
+          kBottomNavigationBarHeight + 40,
         ),
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics(),
@@ -105,35 +86,30 @@ class SettingsScreen extends StatelessWidget {
             isDark: isDark,
             onTap: () => _openEditReasonsSheet(),
           ),
-          // _sectionTile(
-          //   'Import Data',
-          //   'Supports backups exported this app',
-          //   isDark: isDark,
-          // ),
-          // _sectionTile(
-          //   'Export Data',
-          //   'Generates a backup file',
-          //   isDark: isDark,
-          // ),
+          _sectionTile(
+            'Import Data',
+            'Supports backups exported this app',
+            isDark: isDark,
+          ),
+          _sectionTile(
+            'Export Data',
+            'Generates a backup file',
+            isDark: isDark,
+          ),
           _sectionTile('Review', 'Rate us on the Play Store', isDark: isDark),
           _sectionTile('Share', 'Share application', isDark: isDark),
-          // _sectionTile('Changelog', 'View changelog', isDark: isDark),
+          _sectionTile('Changelog', 'View changelog', isDark: isDark),
           _sectionTile(
             'Feedback',
             'Report bugs or request features',
             isDark: isDark,
           ),
           _sectionTile('Website', 'Visit our website', isDark: isDark),
-          _sectionTile(
-            'Privacy Policy',
-            'View privacy policy',
-            isDark: isDark,
-            onTap: () => controller.launchPrivacyPolicy(),
-          ),
-          // _sectionTile('Source Code', 'View source code', isDark: isDark),
+          _sectionTile('Privacy Policy', 'View privacy policy', isDark: isDark),
+          _sectionTile('Source Code', 'View source code', isDark: isDark),
           _sectionTile(
             'About',
-            'About Shahada.life',
+            'About Shahada',
             isDark: isDark,
             onTap: _openAboutBottomSheet,
           ),
@@ -378,7 +354,7 @@ class SettingsScreen extends StatelessWidget {
                       Switch(
                         value: controller.dailyNotification.value,
                         onChanged: controller.toggleDailyNotification,
-                        activeThumbColor: const Color(0xff3183FF),
+                        activeColor: const Color(0xff3183FF),
                       ),
                     ],
                   ),
@@ -495,7 +471,7 @@ class SettingsScreen extends StatelessWidget {
                         Switch(
                           value: controller.salahNotification.value,
                           onChanged: controller.toggleSalahNotification,
-                          activeThumbColor: const Color(0xff3183FF),
+                          activeColor: const Color(0xff3183FF),
                         ),
                       ],
                     ),
@@ -575,7 +551,9 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    _safeFormatDate(controller.startDate.value),
+                    _safeFormatDate(
+                      controller.startDate.value,
+                    ), // ✅ Fixed Error
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -596,24 +574,24 @@ class SettingsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
 
-                  //  Sirf yeh date picker button wala part replace karo
+                  // ✅ Sirf yeh date picker button wala part replace karo
                   GestureDetector(
                     onTap: () => _pickDate(controller),
                     child: Container(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.5,
                       padding: const EdgeInsets.symmetric(
                         horizontal: 14,
                         vertical: 9,
                       ),
                       decoration: BoxDecoration(
-                        // Fix 2 — solid teal, no gradient
+                        // ✅ Fix 2 — solid teal, no gradient
                         color: const Color(0xFF1AA6A6),
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          //  Fix 1 — date set nahi toh sirf empty, set hai toh date dikhao
+                          // ✅ Fix 1 — date set nahi toh sirf empty, set hai toh date dikhao
                           Text(
                             dateSelected
                                 ? _safeFormatDate(controller.startDate.value)
@@ -724,7 +702,7 @@ class SettingsScreen extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Teal Header
+                  // ✅ Teal Header
                   Container(
                     width: double.infinity,
                     color: const Color(0xFF2FA4A9),
@@ -752,7 +730,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  //Custom Month Row
+                  // ✅ Custom Month Row
                   Container(
                     color: bgColor,
                     padding: const EdgeInsets.symmetric(
@@ -798,7 +776,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  //Calendar — gap bilkul nahi, built-in header clip se cut
+                  //  Calendar — gap bilkul nahi, built-in header clip se cut
                   Theme(
                     data: Theme.of(context).copyWith(
                       colorScheme: ColorScheme.light(
@@ -866,7 +844,7 @@ class SettingsScreen extends StatelessWidget {
                     ),
                   ),
 
-                  //  CLEAR + CANCEL + SET
+                  // ✅ CLEAR + CANCEL + SET
                   Container(
                     color: bgColor,
                     padding: const EdgeInsets.fromLTRB(0, 0, 8, 8),
@@ -1011,7 +989,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 8),
-                    //  Add button
+                    // ✅ Add button
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.teal,
@@ -1023,7 +1001,7 @@ class SettingsScreen extends StatelessWidget {
                       child: Text('Add', style: TextStyle(color: Colors.white)),
                     ),
                     const SizedBox(width: 4),
-                    // Reset icon — Add ke side mein
+                    // ✅ Reset icon — Add ke side mein
                     IconButton(
                       onPressed: () => _confirmResetOrDelete(null),
                       icon: Icon(
@@ -1132,9 +1110,7 @@ class SettingsScreen extends StatelessWidget {
     final isDark = Get.isDarkMode;
     Get.bottomSheet(
       Container(
-        width: double.infinity,
         padding: const EdgeInsets.all(20),
-        margin: EdgeInsets.zero,
         decoration: BoxDecoration(
           color: isDark ? const Color(0xFF1E1E1E) : Colors.white,
           borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
@@ -1152,8 +1128,7 @@ class SettingsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 24),
             Text(
-              // 'MyUmmahApps Ltd',
-              'Shahada.life',
+              'MyUmmahApps Ltd',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

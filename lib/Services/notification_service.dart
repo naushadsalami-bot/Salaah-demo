@@ -1,3 +1,4 @@
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -13,7 +14,15 @@ class NotificationService {
     tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
 
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
-    const settings = InitializationSettings(android: android);
+
+    // ✅ iOS settings add kiya
+    const ios = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+
+    const settings = InitializationSettings(android: android, iOS: ios);
 
     await _notifications.initialize(
       settings,
@@ -24,8 +33,13 @@ class NotificationService {
 
     await FirebaseMessaging.instance.requestPermission();
 
-    String? token = await FirebaseMessaging.instance.getToken();
-    print("🚀 FCM TOKEN: $token");
+    String? token;
+    try {
+      token = await FirebaseMessaging.instance.getToken();
+      print(" FCM TOKEN: $token");
+    } catch (e) {
+      print("Token error (ignore on simulator): $e");
+    }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       showNow();
@@ -35,7 +49,6 @@ class NotificationService {
     await rescheduleFromPrefs();
   }
 
-  // ✅ SharedPreferences se time padh ke reschedule karo
   static Future<void> rescheduleFromPrefs() async {
     final prefs = await SharedPreferences.getInstance();
     final isOn = prefs.getBool('daily_notification_on') ?? false;
@@ -47,7 +60,6 @@ class NotificationService {
     print("🔁 Rescheduled from prefs: $hour:$minute");
   }
 
-  //
   static Future<void> scheduleDailyAndSave(TimeOfDay time) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('daily_notification_on', true);
@@ -56,7 +68,6 @@ class NotificationService {
     await scheduleDaily(time);
   }
 
-  //
   static Future<void> cancelAllAndSave() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('daily_notification_on', false);
@@ -75,6 +86,7 @@ class NotificationService {
           importance: Importance.max,
           priority: Priority.high,
         ),
+        iOS: DarwinNotificationDetails(), // ✅ iOS support
       ),
     );
   }
@@ -106,9 +118,10 @@ class NotificationService {
           importance: Importance.max,
           priority: Priority.high,
         ),
+        iOS: DarwinNotificationDetails(), // ✅ iOS support
       ),
       uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
+      UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
       androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );

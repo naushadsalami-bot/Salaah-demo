@@ -4,7 +4,6 @@ import 'package:shahada_app_getx/controllers/home_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shahada_app_getx/Services/notification_service.dart';
 import 'package:shahada_app_getx/controllers/theme_controller.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingsController extends GetxController {
   final TextEditingController reasonTextController = TextEditingController();
@@ -137,7 +136,7 @@ class SettingsController extends GetxController {
 
     newReason.value = '';
 
-    reasonTextController.clear();
+    reasonTextController.clear(); 
 
     await _saveReasons();
   }
@@ -149,13 +148,6 @@ class SettingsController extends GetxController {
 
   void resetReasons() {
     reasons.assignAll(_defaultReasons);
-    _saveReasons();
-  }
-
-  Future<void> launchPrivacyPolicy() async {
-    final Uri url = Uri.parse('https://shahada.life/privacy-policy/');
-    if (await canLaunchUrl(url)) {
-      await launchUrl(url, mode: LaunchMode.externalApplication);
-    }
+    _saveReasons(); // ✅ save + sync
   }
 }

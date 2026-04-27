@@ -2,50 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shahada_app_getx/controllers/home_controller.dart';
 
-String _formatShortDate(String dateStr) {
-  try {
-    final parts = dateStr.split('.');
-    final day = parts[0];
-    final month = int.parse(parts[1]);
-    final year = '20${parts[2]}';
-    const monthNames = [
-      '',
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '$day-${monthNames[month]}-$year';
-  } catch (_) {
-    return dateStr;
-  }
-}
-
 void showPrayerSheet(
   BuildContext context,
   HomeController controller,
   String dayKey,
   int prayerIndex, {
   bool isEdit = false,
-  bool isView = false,
+  bool isView = false, // ✅ naya parameter
 }) {
   final isDark = Theme.of(context).brightness == Brightness.dark;
   final prayerNames = ['Fajr', 'Dhuhr', 'Asar', 'Maghrib', 'Isha'];
   final parts = dayKey.split(' ');
   final dateStr = parts[0];
   final dayLabel = parts[1];
-  final dayDisplay = dayLabel == 'Today'
-      ? 'today'
-      : 'on ${_formatShortDate(dateStr)}';
-  // final dayDisplay = dayLabel == 'Today' ? 'today' : 'on $dateStr';
+  final dayDisplay = dayLabel == 'Today' ? 'today' : 'on $dateStr';
 
   final existingStatus =
       controller.days[dayKey]?[prayerIndex] ?? PrayerStatus.none;
@@ -77,7 +47,7 @@ void showPrayerSheet(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
     ),
-    builder: (context) {
+    builder: (_) {
       return Padding(
         padding: EdgeInsets.only(
           left: 16,
@@ -115,7 +85,7 @@ void showPrayerSheet(
                           : 'How did you pray ${prayerNames[prayerIndex]} $dayDisplay?',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: isDark ? Colors.white54 : Colors.black54,
                       ),

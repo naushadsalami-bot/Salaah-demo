@@ -1,22 +1,11 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shahada_app_getx/controllers/home_controller.dart';
 
-class StatsReasonsSlider extends StatefulWidget {
+class StatsReasonsSlider extends StatelessWidget {
   final String selectedPrayer;
 
   const StatsReasonsSlider({super.key, required this.selectedPrayer});
-
-  @override
-  State<StatsReasonsSlider> createState() => _StatsReasonsSliderState();
-}
-
-class _StatsReasonsSliderState extends State<StatsReasonsSlider> {
-  final PageController _pageController = PageController();
-  Timer? _autoSlideTimer;
-  int _currentPage = 0;
-  int _totalPages = 0;
 
   final List<String> prayerNames = const [
     'Fajr',
@@ -31,76 +20,47 @@ class _StatsReasonsSliderState extends State<StatsReasonsSlider> {
   HomeController get homeController => Get.find<HomeController>();
 
   @override
-  void initState() {
-    super.initState();
-    _startAutoSlide();
-  }
-
-  void _startAutoSlide() {
-    _autoSlideTimer?.cancel();
-    _autoSlideTimer = Timer.periodic(const Duration(seconds: 6), (timer) {
-      if (_pageController.hasClients && _totalPages > 1) {
-        _currentPage = (_currentPage + 1) % _totalPages;
-        _pageController.animateToPage(
-          _currentPage,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-        );
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _autoSlideTimer?.cancel();
-    _pageController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    if (widget.selectedPrayer == 'All') {
+    if (selectedPrayer == 'All') {
       return Obx(() {
+        // ✅ Pehle check karo kaunse pages mein reasons hain
         final pages = <Widget>[];
 
-        if (_hasReasons(PrayerStatus.late)) {
-          pages.add(
-            _buildReasonPage(context, "Praying Salah Late", PrayerStatus.late),
-          );
-        }
-        if (_hasReasons(PrayerStatus.missed)) {
-          pages.add(
-            _buildReasonPage(context, "Missing Salah", PrayerStatus.missed),
-          );
-        }
-        if (_hasReasons(PrayerStatus.excused)) {
-          pages.add(
-            _buildReasonPage(context, "Praying On Time", PrayerStatus.excused),
-          );
-        }
+        final latePage = _buildReasonPage(
+          context,
+          "Praying Salah Late",
+          PrayerStatus.late,
+        );
+        final missedPage = _buildReasonPage(
+          context,
+          "Missing Salah",
+          PrayerStatus.missed,
+        );
+        final excusedPage = _buildReasonPage(
+          context,
+          "Praying On Time",
+          PrayerStatus.excused,
+        );
 
+        if (_hasReasons(PrayerStatus.late)) pages.add(latePage);
+        if (_hasReasons(PrayerStatus.missed)) pages.add(missedPage);
+        if (_hasReasons(PrayerStatus.excused)) pages.add(excusedPage);
+
+        // ✅ Agar koi bhi page nahi toh kuch show mat karo
         if (pages.isEmpty) return const SizedBox.shrink();
 
-        //  Total pages update karo
-        _totalPages = pages.length;
-
-        return SizedBox(
-          height: 145,
-          child: PageView(controller: _pageController, children: pages),
-        );
+        return SizedBox(height: 145, child: PageView(children: pages));
       });
     } else {
       return Obx(() {
+        // ✅ Single prayer mode mein bhi check karo
         if (!_hasSingleReasons()) return const SizedBox.shrink();
-
-        _totalPages = 1; // single prayer mein sirf 1 page
         return SizedBox(height: 145, child: _buildReasonPageSingle(context));
       });
     }
   }
 
-  // ============ Baaki saara code SAME rehta hai ============
-
+  // ✅ Helper: All mode ke liye check
   bool _hasReasons(PrayerStatus filter) {
     bool found = false;
     homeController.notes.forEach((date, prayersMap) {
@@ -119,15 +79,18 @@ class _StatsReasonsSliderState extends State<StatsReasonsSlider> {
     return found;
   }
 
+  // ✅ Helper: Single prayer mode ke liye check
   bool _hasSingleReasons() {
-    final pIdx = prayerNames.indexOf(widget.selectedPrayer);
+    final pIdx = prayerNames.indexOf(selectedPrayer);
     if (pIdx == -1) return false;
     bool found = false;
     homeController.notes.forEach((date, prayersMap) {
       final dayStatuses = homeController.days[date];
       if (dayStatuses != null && dayStatuses.length > pIdx) {
-        final reason = prayersMap[widget.selectedPrayer];
-        if (reason != null && reason.trim().isNotEmpty) found = true;
+        final reason = prayersMap[selectedPrayer];
+        if (reason != null && reason.trim().isNotEmpty) {
+          found = true;
+        }
       }
     });
     return found;
@@ -141,6 +104,7 @@ class _StatsReasonsSliderState extends State<StatsReasonsSlider> {
     return Obx(() {
       Map<String, int> reasonCounts = {};
       int totalFilterCount = 0;
+
       homeController.notes.forEach((date, prayersMap) {
         final dayStatuses = homeController.days[date];
         if (dayStatuses != null) {
@@ -155,6 +119,7 @@ class _StatsReasonsSliderState extends State<StatsReasonsSlider> {
           });
         }
       });
+
       return _buildSliderContent(
         context,
         title,
@@ -168,24 +133,24 @@ class _StatsReasonsSliderState extends State<StatsReasonsSlider> {
     return Obx(() {
       Map<String, int> reasonCounts = {};
       int totalFilterCount = 0;
-      final pIdx = prayerNames.indexOf(widget.selectedPrayer);
-      if (pIdx == -1) {
-        return _buildSliderContent(context, widget.selectedPrayer, {}, 0);
-      }
+      final pIdx = prayerNames.indexOf(selectedPrayer);
+      if (pIdx == -1)
+        return _buildSliderContent(context, selectedPrayer, {}, 0);
 
       homeController.notes.forEach((date, prayersMap) {
         final dayStatuses = homeController.days[date];
         if (dayStatuses != null && dayStatuses.length > pIdx) {
-          final reason = prayersMap[widget.selectedPrayer];
+          final reason = prayersMap[selectedPrayer];
           if (reason != null && reason.trim().isNotEmpty) {
             reasonCounts[reason] = (reasonCounts[reason] ?? 0) + 1;
             totalFilterCount++;
           }
         }
       });
+
       return _buildSliderContent(
         context,
-        widget.selectedPrayer,
+        selectedPrayer,
         reasonCounts,
         totalFilterCount,
       );
@@ -199,6 +164,7 @@ class _StatsReasonsSliderState extends State<StatsReasonsSlider> {
     int totalFilterCount,
   ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
     var sorted = reasonCounts.entries.toList()
       ..sort((a, b) => b.value.compareTo(a.value));
 

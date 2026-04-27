@@ -2,34 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shahada_app_getx/controllers/home_controller.dart';
 
-String formatDayKey(String dayKey) {
-  try {
-    final parts = dayKey.split(' ').first.split('.');
-    final day = parts[0];
-    final month = int.parse(parts[1]);
-    final year = '20${parts[2]}';
-    const monthNames = [
-      '',
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return '$day-${monthNames[month]}-$year';
-  } catch (_) {
-    return dayKey;
-  }
-}
-
-// Pehli baar hint popup — sirf install ke baad ek baar
+// ✅ Pehli baar hint popup — sirf install ke baad ek baar
 void showMissedHintIfNeeded(BuildContext context, HomeController controller) {
   if (controller.hasSeenMissedHint.value) return;
 
@@ -191,12 +164,12 @@ void showMissedSalahSheet(BuildContext context, HomeController controller) {
                               Row(
                                 children: [
                                   Text(
-                                    formatDayKey(missed.dayKey),
+                                    missed.dayKey.split(' ').first,
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: isDark
-                                          ? Colors.white
-                                          : Colors.black,
+                                          ? Colors.grey.shade400
+                                          : Colors.black54,
                                     ),
                                   ),
                                   const Spacer(),

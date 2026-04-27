@@ -32,36 +32,6 @@ class HomeDayRow extends StatelessWidget {
     }
   }
 
-  String _formatDate(String dateStr) {
-    try {
-      // ✅ Dono format handle karo . aur /
-      final parts = dateStr.contains('/')
-          ? dateStr.split('/')
-          : dateStr.split('.');
-      final day = parts[0];
-      final month = int.parse(parts[1]);
-      final year = '20${parts[2]}';
-
-      const months = [
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-      ];
-      return '$day-${months[month - 1]}-$year';
-    } catch (e) {
-      return dateStr;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final parts = dayKey.split(' ');
@@ -72,35 +42,23 @@ class HomeDayRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         // DATE
-        // DATE column mein yeh replace karo:
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                _formatDate(dateStr),
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                  color: isDark ? Colors.white : Colors.black,
-                ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(dateStr, style: const TextStyle(fontSize: 13)),
+            const SizedBox(height: 2),
+            Text(
+              dayLabel,
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: dayLabel == 'Today' ? Color(0xff5FAE81) : null,
               ),
-              const SizedBox(height: 2),
-              Text(
-                dayLabel,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  color: dayLabel == 'Today'
-                      ? Color(0xff5FAE81)
-                      : (isDark ? Colors.white : Colors.black),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
 
-        // const Spacer(),
+        const Spacer(),
 
         // PRAYERS — same width as header columns
         Row(
@@ -117,7 +75,7 @@ class HomeDayRow extends StatelessWidget {
                     dayKey,
                     index,
                     isEdit: false,
-                    isView: prayers[index] != PrayerStatus.none,
+                    isView: prayers[index] != PrayerStatus.none, // ✅ yahi badla
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8),
@@ -148,4 +106,3 @@ class HomeDayRow extends StatelessWidget {
     );
   }
 }
-     

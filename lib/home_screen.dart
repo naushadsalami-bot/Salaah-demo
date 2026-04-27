@@ -45,33 +45,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  String _formatShortDate(String dateStr) {
-    try {
-      final parts = dateStr.split('.');
-      final day = parts[0];
-      final month = int.parse(parts[1]);
-      final year = '20${parts[2]}';
-      const monthNames = [
-        '',
-        'January',
-        'February',
-        'March',
-        'April',
-        'May',
-        'June',
-        'July',
-        'August',
-        'September',
-        'October',
-        'November',
-        'December',
-      ];
-      return '$day-${monthNames[month]}-$year';
-    } catch (_) {
-      return dateStr;
-    }
-  }
-
   void _showSelectPrayerSheet(HomeController controller) {
     showModalBottomSheet(
       context: context,
@@ -121,8 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                // '$dayLabel ($dateStr)',
-                                '$dayLabel (${_formatShortDate(dateStr)})',
+                                '$dayLabel ($dateStr)',
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
