@@ -3,7 +3,7 @@ workflows:
     name: iOS Workflow
     max_build_duration: 120
     integrations:
-      app_store_connect: Salaah_Distribution
+      app_store_connect: Salaah test
     environment:
       ios_signing:
         distribution_type: app_store
